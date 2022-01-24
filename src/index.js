@@ -1,7 +1,17 @@
-import("../pkg/index.js").then((module) => {
-    console.log(module);
-    module.greet('xiaoming');
-    const a =module.sort([1,3]);
-    console.log(a, typeof a)
-}).catch(console.error);
+// import("../pkg/index.js").then((module) => {
+//     console.log(module);
+// }).catch(console.error);
 
+import {Universe} from '../pkg/index.js';
+
+const universe = Universe.new(32, 32);
+
+const pre = document.createElement('pre');
+document.body.appendChild(pre);
+
+function render() {
+    pre.textContent = universe.render();
+    universe.tick();
+    requestAnimationFrame(render);
+}
+requestAnimationFrame(render);

@@ -39,6 +39,8 @@ wasm-bindgen = { version = "0.2.45", features = ["serde-serialize"] }
 # compared to the default allocator's ~10K. However, it is slower than the default
 # allocator, so it's not enabled by default.
 wee_alloc = { version = "0.4.2", optional = true }
+rand={version="0.8"}
+getrandom = { version = "0.2", features = ["js", "wasm-bindgen"] }
 
 # The `web-sys` crate allows you to interact with the various browser APIs,
 # like the DOM.

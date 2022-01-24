@@ -13,6 +13,14 @@ module.exports = {
         path: dist,
         filename: "[name].js"
     },
+    devServer: {
+        client: {
+            overlay: {
+                errors: true,
+                warnings: false
+            }
+        }
+    },
     plugins: [
         new CopyPlugin({
             patterns: [
@@ -28,6 +36,6 @@ module.exports = {
         }),
     ],
     experiments: {
-        syncWebAssembly: true
+        asyncWebAssembly: true
     }
 };
