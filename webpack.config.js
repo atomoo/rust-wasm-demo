@@ -1,11 +1,12 @@
 const path = require("path");
-const CopyPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
 
 const dist = path.resolve(__dirname, "dist");
 
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 module.exports = {
-    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    mode,
     entry: {
         index: "./src/index.js"
     },
@@ -21,11 +22,17 @@ module.exports = {
             }
         }
     },
+    module: {
+        rules: [
+            {
+                test: /\.wasm$/,
+                type: "webassembly/async"
+            }
+        ]
+    },
     plugins: [
-        new CopyPlugin({
-            patterns: [
-                path.resolve(__dirname, "static")
-            ]
+        new HtmlWebpackPlugin({
+            title: 'demo'
         }),
 
         new WasmPackPlugin({
@@ -33,6 +40,8 @@ module.exports = {
             watchDirectories: [
                 path.resolve(__dirname, 'wasm')
             ],
+            outDir: path.resolve(__dirname, 'src/pkg'),
+            forceMode: mode
         }),
     ],
     experiments: {

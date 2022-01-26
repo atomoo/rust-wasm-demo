@@ -2,8 +2,6 @@ mod utils;
 
 use wasm_bindgen::prelude::*;
 use web_sys::console;
-use std::fmt;
-use rand::Rng;
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
@@ -19,10 +17,15 @@ pub fn main_js() -> Result<(), JsValue> {
     utils::set_panic_hook();
     // Your code goes here!
     console::log_1(&JsValue::from_str("Hello world!"));
+    console::log_1(&JsValue::from_str(&format!("{}", js_sys::Math::random())));
 
     Ok(())
 }
 
+#[wasm_bindgen]
+pub fn wasm_memory() -> JsValue {
+    wasm_bindgen::memory()
+}
 
 #[wasm_bindgen]
 #[repr(u8)]
@@ -37,20 +40,6 @@ pub struct Universe {
     width: u32,
     height: u32,
     cells: Vec<Cell>,
-}
-
-impl fmt::Display for Universe {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        for line in self.cells.as_slice().chunks(self.width as usize) {
-            for &cell in line {
-                let symbol = if cell == Cell::Dead { '◻' } else { '◼' };
-                write!(f, "{}", symbol)?;
-            }
-            write!(f, "\n")?;
-        }
-
-        Ok(())
-    }
 }
 
 impl Universe {
@@ -113,12 +102,11 @@ impl Universe {
         self.cells = next;
     }
 
-    pub fn new(width: u32, height: u32) -> Universe {
+    pub fn init(width: u32, height: u32) -> Universe {
         let cells = (0..width * height)
             .map(|_i| {
-                let mut rng = rand::thread_rng();
-                let roll:u8 = rng.gen_range(0..10);
-                if roll > 5 {
+                let random = js_sys::Math::random();
+                if random > 0.5 {
                     Cell::Alive
                 } else {
                     Cell::Dead
@@ -133,8 +121,8 @@ impl Universe {
         }
     }
 
-    pub fn render(&self) -> String {
-        self.to_string()
+    pub fn cells(&self) -> *const Cell {
+        self.cells.as_ptr()
     }
 }
 
