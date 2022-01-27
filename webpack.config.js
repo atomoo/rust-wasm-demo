@@ -5,6 +5,7 @@ const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
 const dist = path.resolve(__dirname, "dist");
 
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+console.log('mode:', mode);
 module.exports = {
     mode,
     context: path.resolve(__dirname),
@@ -42,9 +43,9 @@ module.exports = {
 
         new WasmPackPlugin({
             crateDirectory: __dirname,
-            // watchDirectories: [
-            //     path.resolve(__dirname, 'wasm')
-            // ],
+            watchDirectories: [
+                path.resolve(__dirname, 'wasm')
+            ],
             // outDir: path.resolve(__dirname, 'src/pkg'),
             forceMode: mode
         }),

@@ -3,7 +3,7 @@
   "name": "rust-webpack-template",
   "version": "0.1.0",
   "scripts": {
-    "build": "NODE_ENV=production rimraf dist src/pkg && webpack",
+    "build": "rimraf dist pkg && NODE_ENV=production webpack",
     "start": "rimraf dist pkg && webpack serve --open --stats-error-details",
     "test": "cargo test && wasm-pack test --headless"
   },

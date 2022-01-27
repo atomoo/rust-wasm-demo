@@ -16,11 +16,13 @@ path = "wasm/lib.rs"
 # This makes the compiled code faster and smaller, but it makes compiling slower,
 # so it's only enabled in release mode.
 lto = true
+opt-level = 's'
+debug = false
 
 [features]
 # If you uncomment this line, it will enable `wee_alloc`:
 #default = ["wee_alloc"]
-default = ["console_error_panic_hook"]
+default = ["console_error_panic_hook", "wee_alloc"]
 
 [dependencies]
 
