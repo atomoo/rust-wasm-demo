@@ -105,8 +105,7 @@ impl Universe {
     pub fn init(width: u32, height: u32) -> Universe {
         let cells = (0..width * height)
             .map(|_i| {
-                let random = js_sys::Math::random();
-                if random > 0.5 {
+                if js_sys::Math::random() > 0.5 {
                     Cell::Alive
                 } else {
                     Cell::Dead

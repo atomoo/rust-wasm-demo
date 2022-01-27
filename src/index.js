@@ -1,4 +1,3 @@
-import('./pkg/index_bg.wasm').then(() => {
-    console.log('fff');
+import('../pkg').then(() => {
     return import('./main');
 }).catch(console.error);

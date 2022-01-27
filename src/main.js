@@ -1,4 +1,4 @@
-import {Universe, Cell, wasm_memory} from './pkg';
+import {Universe, Cell, wasm_memory} from '../pkg';
 const COLUMN = 50;
 const ROW = 50;
 
@@ -30,7 +30,6 @@ function drawGrid(ctx) {
     ctx.strokeStyle = GRID_COLOR;
     ctx.lineWidth = 1;
     for (let i = 0; i <= COLUMN; i++) {
-        console.log((CELL_SIZE + 1) * i + 1);
         ctx.moveTo((CELL_SIZE + 1) * i + 1, 0);
         ctx.lineTo((CELL_SIZE + 1) * i + 1, CELL_SIZE * ROW + ROW + 1);
     }
@@ -80,5 +79,5 @@ function main() {
         render(ctx, universe);
     });
 }
-
+//
 main();

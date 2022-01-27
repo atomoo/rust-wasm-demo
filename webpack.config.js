@@ -7,19 +7,24 @@ const dist = path.resolve(__dirname, "dist");
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 module.exports = {
     mode,
+    context: path.resolve(__dirname),
     entry: {
-        index: "./src/index.js"
+        index: path.resolve(__dirname, 'src/index.js')
     },
     output: {
         path: dist,
         filename: "[name].js"
     },
     devServer: {
+        compress: true,
         client: {
             overlay: {
                 errors: true,
                 warnings: false
             }
+        },
+        watchFiles: {
+            paths: ['src/**/*', 'pkg/**/*']
         }
     },
     module: {
@@ -37,10 +42,10 @@ module.exports = {
 
         new WasmPackPlugin({
             crateDirectory: __dirname,
-            watchDirectories: [
-                path.resolve(__dirname, 'wasm')
-            ],
-            outDir: path.resolve(__dirname, 'src/pkg'),
+            // watchDirectories: [
+            //     path.resolve(__dirname, 'wasm')
+            // ],
+            // outDir: path.resolve(__dirname, 'src/pkg'),
             forceMode: mode
         }),
     ],
